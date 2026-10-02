@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<style>
+
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        background: transparent;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    #question {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    #status {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    #answer {
+        min-height: 120px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 17px;
+        line-height: 1.5;
+        background: #ffffff;
+        white-space: pre-wrap;
+        outline: none;
+    }
+
+    button {
+        padding: 12px 22px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #startBtn {
+        background: #000000;
+        color: white;
+    }
+
+    #endBtn {
+        background: #dddddd;
+        color: black;
+    }
+
+    #editBtn {
+        background: #e8e8e8;
+        color: black;
+    }
+
+    #nextBtn {
+        background: #000000;
+        color: white;
+    }
+
+    #skipBtn {
+        background: #f0f0f0;
+        color: black;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    #answer[contenteditable="true"] {
+        border: 2px solid #000000;
+        background: #fff;
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="container">
+
+    <div id="question">
+        Waiting for question...
+    </div>
+
+    <div id="status">
+        🔊 Preparing question...
+    </div>
+
+
+    <button
+        id="startBtn"
+        onclick="startListening()"
+    >
+        🎙️ Start Answer
+    </button>
+
+
+    <button
+        id="endBtn"
+        onclick="endListening()"
+        disabled
+    >
+        ⏹️ End Answer
+    </button>
+
+
+    <button
+        id="editBtn"
+        onclick="editAnswer()"
+        disabled
+    >
+        ✏️ Edit Answer
+    </button>
+
+
+    <button
+        id="nextBtn"
+        onclick="submitEditedAnswer()"
+        disabled
+    >
+        ➡️ Next Question
+    </button>
+
+
+    <button
+        id="skipBtn"
+        onclick="skipQuestion()"
+    >
+        ⏭️ Skip
+    </button>
+
+
+    <div
+        id="answer"
+        contenteditable="false"
+    >
+        Your answer will appear here...
+    </div>
+
+</div>
+```
+
+<script>
+
+
+    // ========================================================
+    // CONFIGURATION
+    // ========================================================
+
+    const TRANSCRIBE_API_URL =
+        "http://127.0.0.1:8000/transcribe";
+
+
+    // ========================================================
+    // STREAMLIT COMMUNICATION
+    // ========================================================
+
+    function sendValueToStreamlit(value) {
+
+        window.parent.postMessage(
+            {
+                isStreamlitMessage: true,
+                type: "streamlit:setComponentValue",
+                value: value
+            },
+            "*"
+        );
+
+    }
+
+
+    function setFrameHeight(height) {
+
+        window.parent.postMessage(
+            {
+                isStreamlitMessage: true,
+                type: "streamlit:setFrameHeight",
+                height: height
+            },
+            "*"
+        );
+
+    }
+
+
+    window.parent.postMessage(
+        {
+            isStreamlitMessage: true,
+            type: "streamlit:componentReady",
+            apiVersion: 1
+        },
+        "*"
+    );
+
+
+    // ========================================================
+    // VARIABLES
+    // ========================================================
+
+    let recognition = null;
+
+    let finalTranscript = "";
+
+    let isListening = false;
+
+    let answerTimer = null;
+
+    let currentQuestion = "";
+
+    let questionAlreadySpoken = false;
+
+    let answerFinished = false;
+
+    let answerSubmitted = false;
+
+    let transcriptionInProgress = false;
+
+    let skipEnabled = true;
+
+    const MAX_DURATION = 180000;
+
+
+    // ========================================================
+    // TRANSCRIPTION API
+    // ========================================================
+
+    async function transcribeAnswer(text) {
+
+        const cleanText = text.trim();
+
+        if (!cleanText) {
+            return "";
+        }
+
+
+        transcriptionInProgress = true;
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        status.innerText =
+            "🔄 Processing transcription...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    TRANSCRIBE_API_URL,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify(
+                            {
+                                text: cleanText
+                            }
+                        )
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Transcription API returned " +
+                    response.status
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.status !==
+                "success"
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Transcription failed"
+                );
+
+            }
+
+
+            return (
+                data.transcript ||
+                cleanText
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Transcription API error:",
+                error
+            );
+
+
+            status.innerText =
+                "⚠️ Transcription API unavailable. Using browser transcript.";
+
+
+            return cleanText;
+
+        }
+
+        finally {
+
+            transcriptionInProgress =
+                false;
+
+        }
+
+    }
+
+
+    // ========================================================
+    // SKIP BUTTON
+    // ========================================================
+
+    function updateSkipButton() {
+
+        const skipButton =
+            document.getElementById(
+                "skipBtn"
+            );
+
+        if (!skipButton) {
+            return;
+        }
+
+        skipButton.style.display =
+            skipEnabled
+                ? "inline-block"
+                : "none";
+
+    }
+
+
+    function enableSkip() {
+
+        const skipButton =
+            document.getElementById(
+                "skipBtn"
+            );
+
+        if (!skipButton) {
+            return;
+        }
+
+        if (skipEnabled) {
+
+            skipButton.disabled = false;
+
+        }
+
+    }
+
+
+    // ========================================================
+    // SPEAK QUESTION
+    // ========================================================
+
+    function speakQuestion(questionText) {
+
+        if (!questionText) {
+            return;
+        }
+
+
+        currentQuestion = questionText;
+
+
+        if (!("speechSynthesis" in window)) {
+
+            document.getElementById(
+                "status"
+            ).innerText =
+                "⚠️ Voice is not supported in this browser.";
+
+            return;
+
+        }
+
+
+        window.speechSynthesis.cancel();
+
+
+        const speech =
+            new SpeechSynthesisUtterance(
+                questionText
+            );
+
+
+        speech.lang = "en-US";
+
+        speech.rate = 0.9;
+
+        speech.pitch = 1.0;
+
+        speech.volume = 1.0;
+
+
+        speech.onstart = function() {
+
+            document.getElementById(
+                "status"
+            ).innerText =
+                "🔊 Speaking question...";
+
+        };
+
+
+        speech.onend = function() {
+
+            if (!isListening) {
+
+                document.getElementById(
+                    "status"
+                ).innerText =
+                    "🎙️ Click Start Answer when you are ready.";
+
+            }
+
+        };
+
+
+        speech.onerror = function(event) {
+
+            console.log(
+                "Speech synthesis error:",
+                event
+            );
+
+
+            document.getElementById(
+                "status"
+            ).innerText =
+                "⚠️ Could not play voice. You can read the question above.";
+
+        };
+
+
+        const voices =
+            window.speechSynthesis.getVoices();
+
+
+        if (voices.length > 0) {
+
+            window.speechSynthesis.speak(
+                speech
+            );
+
+        }
+
+        else {
+
+            window.speechSynthesis.onvoiceschanged =
+                function() {
+
+                    window.speechSynthesis.speak(
+                        speech
+                    );
+
+                };
+
+        }
+
+    }
+
+
+    // ========================================================
+    // STREAMLIT RENDER MESSAGE
+    // ========================================================
+
+    window.addEventListener(
+        "message",
+        function(event) {
+
+            if (!event.data) {
+                return;
+            }
+
+
+            if (
+                event.data.type ===
+                "streamlit:render"
+            ) {
+
+                const args =
+                    event.data.args || {};
+
+
+                skipEnabled =
+                    args.skip_enabled !== false;
+
+                updateSkipButton();
+
+
+                if (args.question) {
+
+                    const newQuestion =
+                        args.question;
+
+
+                    enableSkip();
+
+
+                    document.getElementById(
+                        "question"
+                    ).innerText =
+                        newQuestion;
+
+
+                    if (
+                        newQuestion !==
+                        currentQuestion
+                    ) {
+
+                        questionAlreadySpoken =
+                            false;
+
+                        answerFinished =
+                            false;
+
+                        answerSubmitted =
+                            false;
+
+                        finalTranscript =
+                            "";
+
+                        transcriptionInProgress =
+                            false;
+
+                        document.getElementById(
+                            "answer"
+                        ).innerText =
+                            "Your answer will appear here...";
+
+                        document.getElementById(
+                            "answer"
+                        ).contentEditable =
+                            "false";
+
+                        document.getElementById(
+                            "editBtn"
+                        ).disabled =
+                            true;
+
+                        document.getElementById(
+                            "nextBtn"
+                        ).disabled =
+                            true;
+
+                        enableSkip();
+
+                    }
+
+
+                    if (
+                        !questionAlreadySpoken
+                    ) {
+
+                        questionAlreadySpoken =
+                            true;
+
+
+                        setTimeout(
+                            function() {
+
+                                speakQuestion(
+                                    newQuestion
+                                );
+
+                            },
+                            700
+                        );
+
+                    }
+
+                }
+
+
+                setFrameHeight(
+                    document.body.scrollHeight
+                );
+
+            }
+
+        }
+    );
+
+
+    // ========================================================
+    // FINISH ANSWER
+    // ========================================================
+
+    async function finishAnswer() {
+
+        if (answerFinished) {
+            return;
+        }
+
+
+        answerFinished = true;
+
+        isListening = false;
+
+
+        if (answerTimer) {
+
+            clearTimeout(
+                answerTimer
+            );
+
+            answerTimer = null;
+
+        }
+
+
+        const startButton =
+            document.getElementById(
+                "startBtn"
+            );
+
+        const endButton =
+            document.getElementById(
+                "endBtn"
+            );
+
+        const editButton =
+            document.getElementById(
+                "editBtn"
+            );
+
+        const nextButton =
+            document.getElementById(
+                "nextBtn"
+            );
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+        const answer =
+            document.getElementById(
+                "answer"
+            );
+
+
+        startButton.disabled = false;
+
+        startButton.innerText =
+            "🎙️ Start Answer";
+
+
+        endButton.disabled = true;
+
+
+        const rawAnswer =
+            finalTranscript.trim();
+
+
+        if (rawAnswer.length > 0) {
+
+            status.innerText =
+                "🔄 Sending transcript to API...";
+
+
+            const transcript =
+                await transcribeAnswer(
+                    rawAnswer
+                );
+
+
+            answer.innerText =
+                transcript;
+
+
+            finalTranscript =
+                transcript;
+
+
+            answer.contentEditable =
+                "false";
+
+
+            editButton.disabled =
+                false;
+
+
+            nextButton.disabled =
+                false;
+
+
+            status.innerText =
+                "✅ Answer recorded. You can edit your answer before continuing.";
+
+        }
+
+        else {
+
+            answer.innerText =
+                "No answer detected.";
+
+
+            status.innerText =
+                "⚠️ No speech detected. Click Start Answer to try again.";
+
+
+            editButton.disabled =
+                true;
+
+
+            nextButton.disabled =
+                true;
+
+        }
+
+
+        enableSkip();
+
+
+        recognition = null;
+
+    }
+
+
+    // ========================================================
+    // START LISTENING
+    // ========================================================
+
+    function startListening() {
+
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+
+        if (!SpeechRecognition) {
+
+            document.getElementById(
+                "status"
+            ).innerText =
+                "❌ Speech recognition is not supported in this browser.";
+
+            return;
+
+        }
+
+
+        if (isListening) {
+            return;
+        }
+
+
+        if (
+            "speechSynthesis" in window
+        ) {
+
+            window.speechSynthesis.cancel();
+
+        }
+
+
+        recognition =
+            new SpeechRecognition();
+
+
+        recognition.lang =
+            "en-US";
+
+        recognition.continuous =
+            true;
+
+        recognition.interimResults =
+            true;
+
+        recognition.maxAlternatives =
+            1;
+
+
+        finalTranscript = "";
+
+        answerFinished = false;
+
+        answerSubmitted = false;
+
+
+        const startButton =
+            document.getElementById(
+                "startBtn"
+            );
+
+        const endButton =
+            document.getElementById(
+                "endBtn"
+            );
+
+        const editButton =
+            document.getElementById(
+                "editBtn"
+            );
+
+        const nextButton =
+            document.getElementById(
+                "nextBtn"
+            );
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+        const answer =
+            document.getElementById(
+                "answer"
+            );
+
+
+        answer.innerText = "";
+
+        answer.contentEditable =
+            "false";
+
+
+        editButton.disabled =
+            true;
+
+        nextButton.disabled =
+            true;
+
+
+        startButton.innerText =
+            "🎤 Listening...";
+
+        startButton.disabled =
+            true;
+
+        endButton.disabled =
+            false;
+
+
+        enableSkip();
+
+
+        status.innerText =
+            "🎤 Listening... You can speak for up to 3 minutes.";
+
+
+        isListening = true;
+
+
+        // ====================================================
+        // SPEECH RESULT
+        // ====================================================
+
+        recognition.onresult =
+            function(event) {
+
+                let interimTranscript =
+                    "";
+
+
+                for (
+                    let i = event.resultIndex;
+                    i < event.results.length;
+                    i++
+                ) {
+
+                    const transcript =
+                        event.results[i][0]
+                            .transcript;
+
+
+                    if (
+                        event.results[i]
+                            .isFinal
+                    ) {
+
+                        finalTranscript +=
+                            transcript + " ";
+
+                    }
+
+                    else {
+
+                        interimTranscript +=
+                            transcript;
+
+                    }
+
+                }
+
+
+                const displayedText =
+                    (
+                        finalTranscript +
+                        interimTranscript
+                    ).trim();
+
+
+                answer.innerText =
+                    displayedText;
+
+
+                status.innerText =
+                    "🎤 Listening...";
+
+            };
+
+
+        // ====================================================
+        // SPEECH START
+        // ====================================================
+
+        recognition.onspeechstart =
+            function() {
+
+                status.innerText =
+                    "🎤 Listening...";
+
+            };
+
+
+        // ====================================================
+        // SPEECH END
+        // ====================================================
+
+        recognition.onend =
+            function() {
+
+                if (!answerFinished) {
+
+                    finishAnswer();
+
+                }
+
+            };
+
+
+        // ====================================================
+        // ERROR
+        // ====================================================
+
+        recognition.onerror =
+            function(event) {
+
+                console.log(
+                    "Speech recognition error:",
+                    event.error
+                );
+
+
+                if (
+                    event.error ===
+                    "aborted"
+                ) {
+
+                    return;
+
+                }
+
+
+                if (
+                    event.error ===
+                    "not-allowed"
+                ) {
+
+                    isListening = false;
+
+
+                    startButton.disabled =
+                        false;
+
+                    endButton.disabled =
+                        true;
+
+
+                    status.innerText =
+                        "❌ Microphone permission was denied. Please allow microphone access.";
+
+                    return;
+
+                }
+
+
+                if (
+                    event.error ===
+                    "no-speech"
+                ) {
+
+                    status.innerText =
+                        "⚠️ No speech detected. You can try again.";
+
+                    return;
+
+                }
+
+
+                status.innerText =
+                    "⚠️ Could not capture your voice. Please try again.";
+
+            };
+
+
+        // ====================================================
+        // START RECOGNITION
+        // ====================================================
+
+        try {
+
+            recognition.start();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Recognition start error:",
+                error
+            );
+
+        }
+
+
+        // ====================================================
+        // 3 MINUTE SAFETY LIMIT
+        // ====================================================
+
+        answerTimer =
+            setTimeout(
+                function() {
+
+                    if (
+                        recognition &&
+                        isListening
+                    ) {
+
+                        status.innerText =
+                            "⏱️ Maximum 3-minute answer time reached.";
+
+
+                        try {
+
+                            recognition.stop();
+
+                        }
+
+                        catch (error) {
+
+                            console.log(
+                                error
+                            );
+
+                        }
+
+
+                        setTimeout(
+                            function() {
+
+                                if (
+                                    !answerFinished
+                                ) {
+
+                                    finishAnswer();
+
+                                }
+
+                            },
+                            1000
+                        );
+
+                    }
+
+                },
+                MAX_DURATION
+            );
+
+    }
+
+
+    // ========================================================
+    // END LISTENING
+    // ========================================================
+
+    function endListening() {
+
+        if (
+            !recognition ||
+            !isListening
+        ) {
+
+            return;
+
+        }
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        status.innerText =
+            "⏹️ Answer captured. Processing transcription...";
+
+
+        if (answerTimer) {
+
+            clearTimeout(
+                answerTimer
+            );
+
+            answerTimer = null;
+
+        }
+
+
+        try {
+
+            recognition.stop();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Recognition stop error:",
+                error
+            );
+
+        }
+
+
+        setTimeout(
+            function() {
+
+                if (!answerFinished) {
+
+                    finishAnswer();
+
+                }
+
+            },
+            1000
+        );
+
+    }
+
+
+    // ========================================================
+    // EDIT ANSWER
+    // ========================================================
+
+    function editAnswer() {
+
+        const answer =
+            document.getElementById(
+                "answer"
+            );
+
+        const editButton =
+            document.getElementById(
+                "editBtn"
+            );
+
+        const nextButton =
+            document.getElementById(
+                "nextBtn"
+            );
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        answer.contentEditable =
+            "true";
+
+
+        answer.focus();
+
+
+        editButton.innerText =
+            "✅ Done Editing";
+
+
+        nextButton.disabled =
+            true;
+
+
+        status.innerText =
+            "✏️ Edit your answer. Click Done Editing when finished.";
+
+
+        enableSkip();
+
+
+        editButton.onclick =
+            finishEditing;
+
+    }
+
+
+    // ========================================================
+    // FINISH EDITING
+    // ========================================================
+
+    function finishEditing() {
+
+        const answer =
+            document.getElementById(
+                "answer"
+            );
+
+        const editButton =
+            document.getElementById(
+                "editBtn"
+            );
+
+        const nextButton =
+            document.getElementById(
+                "nextBtn"
+            );
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        answer.contentEditable =
+            "false";
+
+
+        editButton.innerText =
+            "✏️ Edit Answer";
+
+
+        editButton.onclick =
+            editAnswer;
+
+
+        nextButton.disabled =
+            false;
+
+
+        status.innerText =
+            "✅ Answer edited. Click Next Question to continue.";
+
+
+        enableSkip();
+
+    }
+
+
+    // ========================================================
+    // SUBMIT EDITED ANSWER
+    // ========================================================
+
+    function submitEditedAnswer() {
+
+        if (answerSubmitted) {
+            return;
+        }
+
+
+        const answer =
+            document.getElementById(
+                "answer"
+            );
+
+
+        const editedAnswer =
+            answer.innerText.trim();
+
+
+        if (!editedAnswer) {
+
+            document.getElementById(
+                "status"
+            ).innerText =
+                "⚠️ Please provide an answer before continuing.";
+
+            return;
+
+        }
+
+
+        answerSubmitted = true;
+
+
+        document.getElementById(
+            "nextBtn"
+        ).disabled = true;
+
+
+        document.getElementById(
+            "editBtn"
+        ).disabled = true;
+
+
+        enableSkip();
+
+
+        document.getElementById(
+            "status"
+        ).innerText =
+            "➡️ Moving to next question...";
+
+
+        sendValueToStreamlit(
+            "__SUBMIT__:" + Date.now() + ":" + editedAnswer
+        );
+
+    }
+
+
+    // ========================================================
+    // SKIP QUESTION
+    // ========================================================
+
+    function skipQuestion() {
+
+        if (!skipEnabled) {
+            return;
+        }
+
+
+        if (answerSubmitted) {
+            return;
+        }
+
+
+        if (
+            "speechSynthesis" in window
+        ) {
+
+            window.speechSynthesis.cancel();
+
+        }
+
+
+        if (
+            recognition &&
+            isListening
+        ) {
+
+            try {
+
+                recognition.stop();
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    error
+                );
+
+            }
+
+        }
+
+
+        isListening = false;
+
+        answerFinished = true;
+
+        answerSubmitted = true;
+
+        finalTranscript = "";
+
+
+        if (answerTimer) {
+
+            clearTimeout(
+                answerTimer
+            );
+
+            answerTimer = null;
+
+        }
+
+
+        document.getElementById(
+            "status"
+        ).innerText =
+            "⏭️ Skipping question...";
+
+
+        document.getElementById(
+            "startBtn"
+        ).disabled =
+            false;
+
+
+        document.getElementById(
+            "startBtn"
+        ).innerText =
+            "🎙️ Start Answer";
+
+
+        document.getElementById(
+            "endBtn"
+        ).disabled =
+            true;
+
+
+        document.getElementById(
+            "editBtn"
+        ).disabled =
+            true;
+
+
+        document.getElementById(
+            "nextBtn"
+        ).disabled =
+            true;
+
+
+        document.getElementById(
+            "answer"
+        ).innerText =
+            "Question skipped.";
+
+
+        enableSkip();
+
+
+        sendValueToStreamlit(
+            "__SKIP__:" + Date.now()
+        );
+
+    }
+
+
+    // ========================================================
+    // INITIAL FRAME HEIGHT
+    // ========================================================
+
+    setTimeout(
+        function() {
+
+            setFrameHeight(
+                document.body.scrollHeight
+            );
+
+            updateSkipButton();
+
+            enableSkip();
+
+        },
+        500
+    );
+
+
+</script>
+
+</body>
+
+</html>

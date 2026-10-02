@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Voice Answer</title>
+
+    <!-- Streamlit Component Library -->
+    <script
+        src="https://unpkg.com/streamlit-component-lib@2.0.0/dist/index.js"
+    ></script>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+            color: #222;
+        }
+
+        .wrap {
+            padding: 4px 0 10px 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        button {
+            border: 1px solid #c9c9c9;
+            background: white;
+            color: #222;
+
+            border-radius: 8px;
+
+            padding: 9px 14px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition:
+                background 0.15s ease,
+                border 0.15s ease;
+        }
+
+        button:hover {
+            background: #f3f4f6;
+        }
+
+        button.primary {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        button.active {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 180px;
+
+            box-sizing: border-box;
+
+            resize: vertical;
+
+            border:
+                1px solid #cfcfcf;
+
+            border-radius: 8px;
+
+            padding: 12px;
+
+            font-size: 16px;
+
+            line-height: 1.5;
+
+            outline: none;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 1px #2563eb;
+        }
+
+        .status {
+
+            font-size: 13px;
+
+            margin-top: 7px;
+
+            color: #666;
+
+            min-height: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="wrap">
+
+    <div class="controls">
+
+        <button
+            id="speakBtn"
+            class="primary"
+        >
+            🔊 Play Question
+        </button>
+
+        <button id="micBtn">
+            🎤 Start Speaking
+        </button>
+
+        <button id="stopBtn">
+            ⏹ Stop
+        </button>
+
+        <button id="clearBtn">
+            🗑 Clear Answer
+        </button>
+
+    </div>
+
+
+    <textarea
+        id="answer"
+        placeholder="Speak your answer or type it here..."
+    ></textarea>
+
+
+    <div
+        id="status"
+        class="status"
+    >
+        You can edit the transcribed text before submitting.
+    </div>
+
+</div>
+
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    // ========================================================
+    // STREAMLIT
+    // ========================================================
+
+    const Streamlit = window.Streamlit;
+
+
+    // ========================================================
+    // ELEMENTS
+    // ========================================================
+
+    const answerBox =
+        document.getElementById("answer");
+
+    const speakBtn =
+        document.getElementById("speakBtn");
+
+    const micBtn =
+        document.getElementById("micBtn");
+
+    const stopBtn =
+        document.getElementById("stopBtn");
+
+    const clearBtn =
+        document.getElementById("clearBtn");
+
+    const status =
+        document.getElementById("status");
+
+
+    // ========================================================
+    // STATE
+    // ========================================================
+
+    let question = "";
+
+    let recognition = null;
+
+    let listening = false;
+
+    let lastQuestion = "";
+
+    let finalTranscript = "";
+
+    let autoSpokenForQuestion = false;
+
+
+    // ========================================================
+    // SEND DATA TO STREAMLIT
+    // ========================================================
+
+    function send(eventName) {
+
+        if (!Streamlit) {
+            return;
+        }
+
+        Streamlit.setComponentValue({
+
+            text: answerBox.value,
+
+            event: eventName || "change"
+
+        });
+
+    }
+
+
+    // ========================================================
+    // RESIZE
+    // ========================================================
+
+    function resize() {
+
+        if (!Streamlit) {
+            return;
+        }
+
+        Streamlit.setFrameHeight(
+            document.documentElement.scrollHeight + 4
+        );
+
+    }
+
+
+    // ========================================================
+    // TEXT TO SPEECH
+    // ========================================================
+
+    function speakQuestion() {
+
+        if (!question) {
+
+            status.textContent =
+                "No question available.";
+
+            return;
+        }
+
+
+        if (!("speechSynthesis" in window)) {
+
+            status.textContent =
+                "Text-to-speech is not available in this browser.";
+
+            return;
+        }
+
+
+        window.speechSynthesis.cancel();
+
+
+        const utterance =
+            new SpeechSynthesisUtterance(question);
+
+
+        utterance.lang = "en-US";
+
+        utterance.rate = 0.95;
+
+        utterance.pitch = 1;
+
+
+        utterance.onstart = function () {
+
+            status.textContent =
+                "🔊 Reading the question...";
+
+        };
+
+
+        utterance.onend = function () {
+
+            status.textContent =
+                "You can speak now or type/edit your answer.";
+
+        };
+
+
+        utterance.onerror = function () {
+
+            status.textContent =
+                "Could not read the question.";
+
+        };
+
+
+        window.speechSynthesis.speak(
+            utterance
+        );
+
+    }
+
+
+    // ========================================================
+    // SPEECH RECOGNITION SETUP
+    // ========================================================
+
+    function setupRecognition() {
+
+        const Recognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+
+        if (!Recognition) {
+
+            status.textContent =
+                "Speech-to-text is not supported. Please use Google Chrome or Microsoft Edge.";
+
+            return null;
+        }
+
+
+        const r =
+            new Recognition();
+
+
+        r.lang = "en-US";
+
+        r.continuous = true;
+
+        r.interimResults = true;
+
+        r.maxAlternatives = 1;
+
+
+        // ----------------------------------------------------
+        // START
+        // ----------------------------------------------------
+
+        r.onstart = function () {
+
+            listening = true;
+
+
+            micBtn.classList.add(
+                "active"
+            );
+
+
+            micBtn.textContent =
+                "🔴 Listening...";
+
+
+            status.textContent =
+                "Speak naturally. Your words will appear below.";
+
+        };
+
+
+        // ----------------------------------------------------
+        // RESULT
+        // ----------------------------------------------------
+
+        r.onresult = function (event) {
+
+            let interim = "";
+
+            let newlyFinal = "";
+
+
+            for (
+                let i = event.resultIndex;
+                i < event.results.length;
+                i++
+            ) {
+
+                const transcript =
+                    event.results[i][0].transcript;
+
+
+                if (
+                    event.results[i].isFinal
+                ) {
+
+                    newlyFinal +=
+                        transcript + " ";
+
+                } else {
+
+                    interim +=
+                        transcript;
+
+                }
+
+            }
+
+
+            if (newlyFinal) {
+
+                finalTranscript +=
+                    newlyFinal;
+
+            }
+
+
+            const prefix =
+                finalTranscript.trim();
+
+
+            answerBox.value =
+                (
+                    prefix +
+                    (
+                        interim
+                            ? " " + interim
+                            : ""
+                    )
+                ).trim();
+
+
+            send("transcript");
+
+
+            resize();
+
+        };
+
+
+        // ----------------------------------------------------
+        // ERROR
+        // ----------------------------------------------------
+
+        r.onerror = function (event) {
+
+            listening = false;
+
+
+            micBtn.classList.remove(
+                "active"
+            );
+
+
+            micBtn.textContent =
+                "🎤 Start Speaking";
+
+
+            status.textContent =
+                "Microphone error: " +
+                event.error;
+
+        };
+
+
+        // ----------------------------------------------------
+        // END
+        // ----------------------------------------------------
+
+        r.onend = function () {
+
+            listening = false;
+
+
+            micBtn.classList.remove(
+                "active"
+            );
+
+
+            micBtn.textContent =
+                "🎤 Start Speaking";
+
+
+            status.textContent =
+                "Listening stopped. You can edit the text above.";
+
+
+            send("stop");
+
+        };
+
+
+        return r;
+
+    }
+
+
+    // ========================================================
+    // START LISTENING
+    // ========================================================
+
+    function startListening() {
+
+        if (!recognition) {
+
+            recognition =
+                setupRecognition();
+
+        }
+
+
+        if (!recognition) {
+            return;
+        }
+
+
+        if (listening) {
+            return;
+        }
+
+
+        finalTranscript =
+            answerBox.value.trim();
+
+
+        try {
+
+            recognition.start();
+
+        } catch (error) {
+
+            status.textContent =
+                "Microphone is already starting. Try again.";
+
+        }
+
+    }
+
+
+    // ========================================================
+    // STOP LISTENING
+    // ========================================================
+
+    function stopListening() {
+
+        if (
+            recognition &&
+            listening
+        ) {
+
+            recognition.stop();
+
+        } else {
+
+            status.textContent =
+                "Microphone is not active.";
+
+        }
+
+    }
+
+
+    // ========================================================
+    // MANUAL TEXT EDIT
+    // ========================================================
+
+    answerBox.addEventListener(
+        "input",
+        function () {
+
+            send("edit");
+
+            resize();
+
+        }
+    );
+
+
+    // ========================================================
+    // BUTTONS
+    // ========================================================
+
+    speakBtn.addEventListener(
+        "click",
+        speakQuestion
+    );
+
+
+    micBtn.addEventListener(
+        "click",
+        startListening
+    );
+
+
+    stopBtn.addEventListener(
+        "click",
+        stopListening
+    );
+
+
+    clearBtn.addEventListener(
+        "click",
+        function () {
+
+            answerBox.value = "";
+
+            finalTranscript = "";
+
+
+            send("clear");
+
+
+            status.textContent =
+                "Answer cleared.";
+
+
+            resize();
+
+        }
+    );
+
+
+    // ========================================================
+    // STREAMLIT RENDER
+    // ========================================================
+
+    function onRender(event) {
+
+        const args =
+            event.detail.args || {};
+
+
+        question =
+            args.question || "";
+
+
+        const incomingText =
+            args.initial_text || "";
+
+
+        const questionChanged =
+            question !== lastQuestion;
+
+
+        // ----------------------------------------------------
+        // Update answer
+        // ----------------------------------------------------
+
+        if (
+            document.activeElement !== answerBox &&
+            answerBox.value !== incomingText
+        ) {
+
+            answerBox.value =
+                incomingText;
+
+
+            finalTranscript =
+                incomingText;
+
+        }
+
+
+        // ----------------------------------------------------
+        // New question
+        // ----------------------------------------------------
+
+        if (questionChanged) {
+
+            lastQuestion =
+                question;
+
+
+            autoSpokenForQuestion =
+                false;
+
+
+            if (listening) {
+
+                stopListening();
+
+            }
+
+
+            setTimeout(
+                function () {
+
+                    if (
+                        !autoSpokenForQuestion &&
+                        question
+                    ) {
+
+                        autoSpokenForQuestion =
+                            true;
+
+
+                        speakQuestion();
+
+                    }
+
+                },
+                300
+            );
+
+        }
+
+
+        resize();
+
+    }
+
+
+    // ========================================================
+    // INITIALIZE STREAMLIT
+    // ========================================================
+
+    if (!Streamlit) {
+
+        status.textContent =
+            "Streamlit component library failed to load.";
+
+        return;
+
+    }
+
+
+    Streamlit.events.addEventListener(
+        Streamlit.RENDER_EVENT,
+        onRender
+    );
+
+
+    Streamlit.setComponentReady();
+
+
+    resize();
+
+
+})();
+
+</script>
+
+</body>
+
+</html>

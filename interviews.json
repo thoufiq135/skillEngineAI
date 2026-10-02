@@ -1,0 +1,995 @@
+{
+    "interviews": [
+        {
+            "id": 1,
+            "userId": 1,
+            "overallScore": 8.2,
+            "skillRatings": {
+                "Python": 8,
+                "SQL": 7
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "SQL"
+            ],
+            "interviewHistory": [],
+            "createdAt": "2026-09-09T15:26:38"
+        },
+        {
+            "id": 2,
+            "userId": 0,
+            "overallScore": 0.0,
+            "skillRatings": {
+                "Python": 0.0,
+                "Java": 0.0,
+                "C": 0.0,
+                "MySQL": 0.0,
+                "HTML": 0.0
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "question_number": 1,
+                    "skill": "Python",
+                    "question": "What is Python and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 2,
+                    "skill": "Java",
+                    "question": "What is Python and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 3,
+                    "skill": "C",
+                    "question": "What is C and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 4,
+                    "skill": "MySQL",
+                    "question": "What is C and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 5,
+                    "skill": "HTML",
+                    "question": "What is HTML and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                }
+            ],
+            "createdAt": "2026-09-09T16:41:19"
+        },
+        {
+            "id": 3,
+            "userId": 2,
+            "overallScore": 0.0,
+            "skillRatings": {},
+            "questionsAnswered": 0,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "questionNumber": 1,
+                    "question": "What is the difference between Python's list and tuple data structures, and when should you use each?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "Explain why Python is preferred over other programming languages for web development, using an example scenario.",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "What are the differences between using Python's list and tuple data structures, and when should you choose each?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "What are the differences between Python's list and tuple data types, and when would you choose one over the other?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "What are the differences between Python's built-in functions map() and filter()?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                }
+            ],
+            "createdAt": "2026-09-11T11:17:14"
+        },
+        {
+            "id": 4,
+            "userId": 2,
+            "overallScore": 0.0,
+            "skillRatings": {},
+            "questionsAnswered": 0,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "questionNumber": 1,
+                    "question": "What is the difference between a function and a method in Python?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "What is the difference between a function and a method in Python?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "What is the difference between a list and a tuple in Python, and when would you use one over the other?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "What is the difference between Python's list and tuple data structures?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "What is the difference between Python's built-in function 'len()' and 'len()' method when used on a list?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "What is the difference between list and tuple in Python, and when would you prefer to use one over the other?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                }
+            ],
+            "createdAt": "2026-09-11T11:22:12"
+        },
+        {
+            "id": 5,
+            "userId": 2,
+            "overallScore": 1.5,
+            "skillRatings": {},
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "questionNumber": 1,
+                    "question": "Explain how the garbage collector in Java automatically manages memory.",
+                    "topic": "General",
+                    "answer": "Java Garbage Collector automatically manages heap memory. It identifies objects that are no longer reachable or being used and removes them, thereby reclaiming memory. This reduces the need for manual memory management and helps prevent memory leaks.\"",
+                    "evaluation": {
+                        "score": 7,
+                        "feedback": "Good explanation of the garbage collector's basic function",
+                        "missingConcepts": [],
+                        "extractedConcepts": [
+                            "heap memory",
+                            "reachable",
+                            "used",
+                            "memory leaks"
+                        ],
+                        "nextQuestionType": "concept_follow_up"
+                    }
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "What is the difference between a function and a method in Python?",
+                    "topic": "General",
+                    "answer": "\"Heap memory in Python is important because it stores dynamically created objects such as lists, dictionaries, and class instances. Python automatically manages this memory using reference counting and garbage collection. Its main characteristics are dynamic allocation, flexible size, and automatic memory management.\"",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Evaluation request failed, but the interview is continuing with a neutral score.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "Can you explain how Python's function decorators can be used to modify the behavior of a function without changing its source code?",
+                    "topic": "General",
+                    "answer": "\"A function is a block of code defined independently and can be called directly, whereas a method is a function defined inside a class and is associated with an object or class. For example, add() is a function, while append() in a list is a method",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Evaluation request failed, but the interview is continuing with a neutral score.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "What is the difference between Python's built-in functions map() and filter()?",
+                    "topic": "General",
+                    "answer": "\"A function is a block of code defined independently and can be called directly, whereas a method is a function defined inside a class and is associated with an object or class. For example, add() is a function, while append() in a list is a method",
+                    "evaluation": {
+                        "score": 8,
+                        "feedback": "Good explanation of function and method differences",
+                        "missingConcepts": [],
+                        "extractedConcepts": [
+                            "function",
+                            "method",
+                            "class",
+                            "object"
+                        ],
+                        "nextQuestionType": "concept_follow_up"
+                    }
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "i don\"t know",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Evaluation request failed, but the interview is continuing with a neutral score.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "What is the difference between a function and a method in Python?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "What is the difference between a list and a tuple in Python?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                }
+            ],
+            "createdAt": "2026-09-11T11:54:22"
+        },
+        {
+            "id": 6,
+            "userId": 0,
+            "overallScore": 3.8,
+            "skillRatings": {
+                "Python": 4.0,
+                "Java": 7.0,
+                "C": 4.0,
+                "MySQL": 4.0
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS",
+                "PowerBi",
+                "Data Visualization",
+                "Machine Learning (ML)"
+            ],
+            "interviewHistory": [
+                {
+                    "question_number": 1,
+                    "skill": "Python",
+                    "question": "What is Python and what is it mainly used for?",
+                    "candidate_answer": "python is a object oriented programming language and it is high level dynamically typed language.it is mainly known for its simplicity and good exception handling concepts",
+                    "score": 4.0,
+                    "feedback": "Candidate provided a good overview of Python's characteristics, but lacked specific details about its applications and use cases.",
+                    "expected_answer": "",
+                    "missing_concepts": [],
+                    "extracted_concepts": [
+                        "object-oriented programming",
+                        "high-level",
+                        "dynamically-typed",
+                        "simplicity",
+                        "exception handling"
+                    ]
+                },
+                {
+                    "question_number": 2,
+                    "skill": "Java",
+                    "question": "What is the difference between synchronous and asynchronous methods in Java, and how do they affect the application's performance?",
+                    "candidate_answer": "Synchronous methods execute one after another, while asynchronous methods can perform multiple tasks concurrently. Synchronous methods can cause a performance bottleneck due to the blocking nature, whereas asynchronous methods can improve performance by reducing the wait time and improving overall application efficiency",
+                    "score": 7.0,
+                    "feedback": "Good explanation of the difference between synchronous and asynchronous methods",
+                    "expected_answer": "Synchronous methods execute one after another, while asynchronous methods can perform multiple tasks concurrently. Synchronous methods can cause a performance bottleneck due to the blocking nature, whereas asynchronous methods can improve performance by reducing the wait time and improving overall application efficiency.",
+                    "missing_concepts": [],
+                    "extracted_concepts": [
+                        "concurrent execution",
+                        "blocking nature",
+                        "wait time",
+                        "overall application efficiency"
+                    ]
+                },
+                {
+                    "question_number": 3,
+                    "skill": "Java",
+                    "question": "Why is concurrent execution important in Java, and what are its main characteristics?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 4,
+                    "skill": "C",
+                    "question": "What is C and what is it mainly used for?",
+                    "candidate_answer": "C is a structured oriented programming language and it is general purpose and procedural programming lanuguage",
+                    "score": 4.0,
+                    "feedback": "Candidate needs to provide more details about C's features and applications.",
+                    "expected_answer": "",
+                    "missing_concepts": [],
+                    "extracted_concepts": [
+                        "structured",
+                        "general purpose",
+                        "procedural programming language"
+                    ]
+                },
+                {
+                    "question_number": 5,
+                    "skill": "MySQL",
+                    "question": "What are the key differences between SELECT and JOIN statements in MySQL when used to retrieve related data?",
+                    "candidate_answer": "select is a command used to retrive the data while join is a clause used to combine rows from multiple tables based on related column between them",
+                    "score": 4.0,
+                    "feedback": "Candidate needs to clarify the difference between SELECT and JOIN statements.",
+                    "expected_answer": "SELECT statements are used to retrieve individual rows of data from a table, while JOIN statements allow you to retrieve related rows by combining data from multiple tables. SELECT is simpler and faster, while JOIN can be more complex but can also be more powerful for combining data from different tables.",
+                    "missing_concepts": [],
+                    "extracted_concepts": []
+                }
+            ],
+            "createdAt": "2026-09-11T11:59:43"
+        },
+        {
+            "id": 7,
+            "userId": 2,
+            "overallScore": 1.0,
+            "skillRatings": {},
+            "questionsAnswered": 3,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "questionNumber": 1,
+                    "question": "What is the difference between synchronized methods and synchronized blocks in Java, and when should you use each?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "Tell me more about your experience with Python and how you have applied it in real projects.",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped. Neutral evaluation applied.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "What is the difference between Python's '==' and 'is' operators?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Answer was skipped",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "Python is a high-level, interpreted, general-purpose programming language. It has simple and easy-to-read syntax, which makes it beginner-friendly. Python is mainly used for web development, data analysis, automation, machine learning, artificial intelligence, and backend development",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "\": \"Good overview of Python's main uses\",\n  \"missing_concepts\": [],\n  \"extracted_concepts\": [\n    \"high-level\",\n    \"interpreted\",\n    \"general-purpose\",\n    \"simple\",\n    \"easy-to-read\",\n    \"web development\",\n    \"data analysis\",\n    \"automation\",\n    \"machine learning\",\n    \"artificial intelligence\",\n    \"backend development\"",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "How does Python's garbage collection differ from JavaScript's garbage collection?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped. Neutral evaluation applied.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "What is the difference between `if` and `elif` statements in Python?",
+                    "topic": "General",
+                    "answer": "The if statement is used to check a condition first, while elif is used to check additional conditions when the previous condition is false. We can use multiple elif statements, but only one if is the starting condition.\u201d",
+                    "evaluation": {
+                        "score": 8,
+                        "feedback": "Good explanation of the difference between if and elif statements",
+                        "missingConcepts": [],
+                        "extractedConcepts": [
+                            "if",
+                            "elif",
+                            "condition"
+                        ],
+                        "nextQuestionType": "concept_follow_up"
+                    }
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "What is the difference between a list and a tuple in Python?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "Why is if important in Python, and what are its main characteristics?",
+                    "topic": "General",
+                    "answer": "\u201cThe if statement is important in Python because it is used for decision-making. It checks whether a condition is true and executes the corresponding block of code. Its main characteristics are condition checking, Boolean evaluation, decision-making, and indentation-based code blocks.",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Evaluation request failed, but the interview is continuing with a neutral score.",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 9,
+                    "question": "What is Python and what is it mainly used for?",
+                    "topic": "General",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "Skipped."
+                    }
+                }
+            ],
+            "createdAt": "2026-09-11T12:33:37"
+        },
+        {
+            "id": 8,
+            "userId": 0,
+            "overallScore": 0.0,
+            "skillRatings": {
+                "Python": 0.0,
+                "Java": 0.0,
+                "C": 0.0,
+                "MySQL": 0.0,
+                "HTML": 0.0
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "question_number": 1,
+                    "skill": "Python",
+                    "question": "What is Python and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 2,
+                    "skill": "Java",
+                    "question": "What is Java and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 3,
+                    "skill": "C",
+                    "question": "What is the main difference between synchronous and asynchronous programming in C?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 4,
+                    "skill": "MySQL",
+                    "question": "What is the main difference between synchronous and asynchronous programming in C?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 5,
+                    "skill": "HTML",
+                    "question": "What is the purpose of using semicolons in HTML?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                }
+            ],
+            "createdAt": "2026-09-11T15:35:06"
+        },
+        {
+            "id": 9,
+            "userId": 0,
+            "overallScore": 0.0,
+            "skillRatings": {
+                "Python": 0.0,
+                "Java": 0.0,
+                "C": 0.0,
+                "MySQL": 0.0,
+                "HTML": 0.0
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "question_number": 1,
+                    "skill": "Python",
+                    "question": "Explain why Python is preferred for web development compared to other languages.",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 2,
+                    "skill": "Java",
+                    "question": "Explain why Python is preferred for web development compared to other languages.",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 3,
+                    "skill": "C",
+                    "question": "What is C and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 4,
+                    "skill": "MySQL",
+                    "question": "What are some common optimization techniques used in MySQL databases?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 5,
+                    "skill": "HTML",
+                    "question": "Why is using semantic HTML tags important for accessibility?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                }
+            ],
+            "createdAt": "2026-09-11T16:59:10"
+        },
+        {
+            "id": 10,
+            "userId": 0,
+            "overallScore": 0.0,
+            "skillRatings": {
+                "Python": 0.0,
+                "Java": 0.0,
+                "C": 0.0,
+                "MySQL": 0.0,
+                "HTML": 0.0
+            },
+            "questionsAnswered": 5,
+            "skills": [
+                "Python",
+                "Java",
+                "C",
+                "MySQL",
+                "HTML",
+                "CSS"
+            ],
+            "interviewHistory": [
+                {
+                    "question_number": 1,
+                    "skill": "Python",
+                    "question": "What is Python and what is it mainly used for?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 2,
+                    "skill": "Java",
+                    "question": "What is the difference between synchronous and asynchronous programming in Java?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 3,
+                    "skill": "C",
+                    "question": "What is the difference between using malloc and calloc in C, and when should you use each?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 4,
+                    "skill": "MySQL",
+                    "question": "What is the difference between a primary key and a unique constraint in MySQL?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                },
+                {
+                    "question_number": 5,
+                    "skill": "HTML",
+                    "question": "What is the difference between the `innerHTML` property and the `textContent` property in HTML?",
+                    "candidate_answer": "Skipped",
+                    "score": 0,
+                    "feedback": "Question skipped by candidate.",
+                    "expected_answer": "",
+                    "missing_concepts": []
+                }
+            ],
+            "createdAt": "2026-09-15T12:27:20"
+        },
+        {
+            "id": 11,
+            "userId": 2,
+            "overallScore": 0.0,
+            "skillRatings": {},
+            "questionsAnswered": 1,
+            "skills": [
+                "Python",
+                "MySQL",
+                "Core Java",
+                "R (Beginner)",
+                "SPSS (Beginner)",
+                "HTML",
+                "CSS",
+                "Microsoft Excel",
+                "Microsoft Office Suite",
+                "Google Workspace",
+                "HRMS Portals (Basic Awareness)",
+                "Job Portals (Naukri",
+                "Indeed)"
+            ],
+            "interviewHistory": [
+                {
+                    "questionNumber": 1,
+                    "question": "What is Python and what is its main purpose?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 2,
+                    "question": "Can you explain the difference between using a list and a dictionary to store and manipulate data in Python?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 3,
+                    "question": "What is Python and what is its main purpose?",
+                    "topic": "Python",
+                    "answer": "programming language  it is it learn  it is easy to learn into compile",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "\": \"Candidate's answer was incomplete and contained irrelevant information.\",\n  \"missing_concepts\": [\n    \"high-level programming language\",\n    \"interpreted language\",\n    \"object-oriented programming\",\n    \"scripting language\",\n    \"general-purpose language\",\n    \"development framework\",\n    \"standard library\",\n    \"community support\"\n  ],\n  \"extracted_concepts\": [],\n  \"next_question_type",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 4,
+                    "question": "Could you walk me through an example of how you've used Python to solve a specific problem or challenge in a previous project?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 5,
+                    "question": "Can you walk me through a specific project where you used Python to implement a feature that significantly improved performance or efficiency?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 6,
+                    "question": "Can you explain the difference between Python's built-in functions and third-party libraries like NumPy or Pandas?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 7,
+                    "question": "Can you explain the difference between using a list and a dictionary to store and access data in Python?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                },
+                {
+                    "questionNumber": 8,
+                    "question": "What is Python and what is its main purpose?",
+                    "topic": "Python",
+                    "answer": "[Skipped]",
+                    "evaluation": {
+                        "score": 0,
+                        "feedback": "No answer provided",
+                        "missingConcepts": [],
+                        "extractedConcepts": [],
+                        "nextQuestionType": "basic"
+                    }
+                }
+            ],
+            "createdAt": "2026-09-15T16:54:28"
+        }
+    ]
+}
