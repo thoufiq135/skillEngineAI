@@ -1,4 +1,4 @@
-from assessment_interview_db import get_connection
+from pages.assessment_interview_db import get_connection
 
 
 conn = get_connection()
