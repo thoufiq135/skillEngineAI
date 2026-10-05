@@ -5,7 +5,7 @@ import time
 import re
 from answer_bridge import get_candidate_answer
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = "http://host.docker.internal:8000"
 API_TIMEOUT = 300
 ADMIN_MAX_QUESTIONS = 15
 ADMIN_TOTAL_TIME_SECONDS = 30 * 60
