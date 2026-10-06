@@ -23,7 +23,7 @@ st.set_page_config(
 # FASTAPI CONNECTION
 # ============================================================
 
-API_URL = "http://host.docker.internal:8000"
+API_URL = "http://127.0.0.1:8000"
 API_TIMEOUT = 300
 
 # Existing Resume Interview
