@@ -6,7 +6,7 @@ import psycopg2
 # DATABASE CONFIGURATION
 # ============================================================
 
-DB_HOST = "100.96.84.42"
+DB_HOST = "100.117.158.50"
 DB_PORT = 5432
 DB_NAME = "skill_engine_tho"
 DB_USER = "admin"
