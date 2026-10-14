@@ -3,3 +3,8 @@ requests
 pypdf
 python-docx
 psycopg2-binary
+fastapi
+uvicorn[standard]
+groq
+python-dotenv
+langchain-core
