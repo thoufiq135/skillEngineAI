@@ -25,8 +25,8 @@ import hmac
 import time
 import re
 from difflib import SequenceMatcher
+from backend.groq_client import generate_ai_response, GROQ_MODEL
 
-from langchain_ollama import ChatOllama
 
 from resume_parser import extract_text
 from llm_analysis import analyze_resume
@@ -39,9 +39,14 @@ from answer_evaluation import (
     evaluate_topic_interview_answer
 )
 
-from backend.assessment_interview_ai import (
+# from backend.assessment_interview_ai import (
+#     generate_final_interview_analysis
+# )
+
+from backend.assessment_interview_final_ai import (
     generate_final_interview_analysis
 )
+
 from backend.db_operations import (
     save_interview,
     save_interview_question
@@ -1954,20 +1959,7 @@ def create_assessment(
 # ADMIN-CREATED INTERVIEW MODE
 # ============================================================
 
-admin_interview_model = ChatOllama(
 
-    model="qwen2.5:1.5b",
-
-    temperature=0.3,
-
-    num_predict=300,
-
-    num_ctx=2048,
-
-    keep_alive="30m",
-
-    format="json"
-)
 
 
 INTERVIEW_TOTAL_TIME_SECONDS = 30 * 60
@@ -2705,11 +2697,15 @@ Do not reuse or paraphrase it:
 {rejected_text}
 """
 
-            response = admin_interview_model.invoke(
+            # response = admin_interview_model.invoke(
+            #     attempt_prompt
+            # )
+
+            # content = response.content
+
+            content = generate_ai_response(
                 attempt_prompt
             )
-
-            content = response.content
 
             if isinstance(
                 content,
@@ -3065,11 +3061,7 @@ Rules:
 
     try:
 
-        response = admin_interview_model.invoke(
-            prompt
-        )
-
-        content = response.content
+        content = generate_ai_response(prompt)
 
         if isinstance(
             content,

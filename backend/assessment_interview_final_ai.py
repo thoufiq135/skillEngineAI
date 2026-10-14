@@ -2,7 +2,7 @@ import json
 import re
 import time
 
-from langchain_ollama import ChatOllama
+from backend.groq_client import generate_ai_response
 from langchain_core.prompts import ChatPromptTemplate
 
 
@@ -10,14 +10,14 @@ from langchain_core.prompts import ChatPromptTemplate
 # AI MODEL
 # ============================================================
 
-model = ChatOllama(
-    model="llama3.2:3b",
-    temperature=0.1,
-    num_predict=500,
-    num_ctx=2048,
-    keep_alive="30m",
-    format="json"
-)
+# model = ChatOllama(
+#     model="llama3.2:3b",
+#     temperature=0.1,
+#     num_predict=500,
+#     num_ctx=2048,
+#     keep_alive="30m",
+#     format="json"
+# )
 
 
 # ============================================================
@@ -99,7 +99,7 @@ Additional rules:
 """)
 
 
-chain = prompt | model
+# chain = prompt | model
 
 
 # ============================================================
@@ -229,15 +229,27 @@ def generate_final_interview_analysis(evaluations):
             "final_feedback": "No interview evaluations were available."
         }
 
-    response = chain.invoke({
-        "evaluations": json.dumps(
-            evaluations,
-            default=str,
-            indent=2
-        )
-    })
+    # response = chain.invoke({
+    #     "evaluations": json.dumps(
+    #         evaluations,
+    #         default=str,
+    #         indent=2
+    #     )
+    # })
 
-    raw_response = response.content
+    # raw_response = response.content
+
+    formatted_prompt = prompt.format(
+        evaluations=json.dumps(
+        evaluations,
+        default=str,
+        indent=2
+        )
+    )
+
+    raw_response = generate_ai_response(
+        formatted_prompt
+    )
 
     print(
         "\n========== FINAL INTERVIEW ANALYSIS =========="
