@@ -8,14 +8,6 @@ services:
 
     ports:
       - "8501:8501"
-
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-    environment:
-      STREAMLIT_SERVER_ADDRESS: 0.0.0.0
-      STREAMLIT_SERVER_PORT: 8501
-      STREAMLIT_SERVER_HEADLESS: "true"
-      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+      - "8100:8100"
 
     restart: unless-stopped
